@@ -1,0 +1,61 @@
+# Below is Python script I created to use the Extract by Mask feature in Arcpy on a 10m DEM of the State of Oregon by each county, 
+# resulting in a series of county-based DEMs that can be added (or removed) from ArcGIS mapspace, resulting in smaller more manageable 
+# workspaces than a large, statewide DEM that may not be appropriate to use for a localized geographic area.
+
+import arcpy
+from arcpy.sa import ExtractByMask
+
+# Enable Spatial Analyst extension
+arcpy.CheckOutExtension("Spatial")
+
+# Define paths
+input_raster = r"C:\your\raster\file\here"  # Raster file
+counties_layer = r"C:\your\counties\file\here"  # County shapefile
+output_workspace = r"C:\your\output\workspace\here"  # Output geodatabase
+
+# Path for temporary files
+temp_layer_path = r"C:\GIS\Temp\temp_layer.shp"
+
+# Access the active ArcGIS map
+aprx = arcpy.mp.ArcGISProject("CURRENT")
+map_obj = aprx.listMaps()[0]  # Assumes the first map is the active one
+
+# Open a Search Cursor to iterate through counties
+with arcpy.da.SearchCursor(counties_layer, ["altName", "SHAPE@"]) as cursor:
+    for row in cursor:
+        # Clean and prepare county name
+        county_name = row[0].replace(" ", "_").replace("-", "_")
+        print(f"Processing county: {county_name}")
+
+        # Create temporary layer for the current county
+        if arcpy.Exists(temp_layer_path):
+            arcpy.Delete_management(temp_layer_path)  # Clear old temp file
+        
+        arcpy.MakeFeatureLayer_management(counties_layer, temp_layer_path, f"\"altName\" = '{row[0]}'")
+
+        # Validate the selection
+        selected_count = int(arcpy.GetCount_management(temp_layer_path)[0])
+        if selected_count == 1:
+            try:
+                # Extract raster by mask
+                out_raster = ExtractByMask(input_raster, temp_layer_path)
+                output_raster_path = f"{output_workspace}\\DEM_{county_name}"
+                out_raster.save(output_raster_path)  # Save the output raster
+
+                # Print message for save location
+                print(f"DEM mask saved to: {output_raster_path}")
+
+                # Add raster to the map
+                map_obj.addDataFromPath(output_raster_path)
+                print(f"DEM mask added to map for: {county_name}")
+            except Exception as e:
+                print(f"Failed to create mask for {county_name}: {e}")
+        else:
+            print(f"No valid selection for county: {county_name}")
+
+        # Clean up temporary layer
+        arcpy.Delete_management(temp_layer_path)
+
+# Release Spatial Analyst extension
+arcpy.CheckInExtension("Spatial")
+print("Processing complete!")

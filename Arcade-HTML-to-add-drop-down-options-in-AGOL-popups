@@ -1,0 +1,18 @@
+# If you have a pop-up in Arc GIS Online that has multiple categories and want to allow the viewer to select what they might be interested in, the following is code I use.
+# To use this code, you need to select "Edit Text" in the pop-up, and then select the HTML editor, which also needs to be selected when you are done making edits. (Not to select the "OK" option--it won't let you anyway.)
+
+<h2>
+    Main Subject Heading
+</h2>
+<details>
+    <summary><strong>Subheading Category 1</strong></summary> # The "strong" results in the subheading being bold, if desired. 
+    <p>
+        Descriptive text
+    </p>
+</details>
+<details>
+    <summary><strong>Subheading Category 2</strong></summary>
+    <p>
+        Descriptive text
+    </p>
+</details>

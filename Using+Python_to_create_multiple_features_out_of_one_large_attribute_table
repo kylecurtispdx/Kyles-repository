@@ -1,0 +1,18 @@
+# Sometimes you want to extract data from a large attribute table, and it's incredibly easy to do a "Search by" attributes, select the features that satisfy your parameters, and export the data is a feature layer.
+# But what if you want to make feature layers out of ALL of the entires in the attribute table? It would be incredibly time-consuming to select each feature and then export data.
+# I came up with the following Python script to go through the attribute table of a map of counties in the State of Oregon, creating individual features for each county. This script could be altered as necessary to fit 
+# file naming process, and also to make sure to select the correct field name of what you want the search cursor to reiterate through.
+
+import arcpy
+
+# Set paths
+input_layer = "C:your\input\file\here"
+output_gdb = "C:your\output\geodatabse\here"
+
+# Use a Search Cursor to iterate through unique county names
+with arcpy.da.SearchCursor(input_layer, ["altName"]) as cursor:
+    for row in cursor:
+        county_name = row[0].replace(" ", "_")  # Sanitize name if needed
+        arcpy.FeatureClassToFeatureClass_conversion(
+            input_layer, output_gdb, county_name, f"altName = '{row[0]}'"
+        )

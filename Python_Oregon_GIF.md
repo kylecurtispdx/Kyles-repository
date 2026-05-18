@@ -192,6 +192,6 @@ print("GIF created:", gif_path)
 # END
 ```
 
-The final result:
+Link to GIF:
 
-![Animation](./assets/images/oregonanimation.gif)
+https://github.com/kylecurtispdx/Kyles-repository/blob/main/assets/images/oregonanimation.gif

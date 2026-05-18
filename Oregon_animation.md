@@ -16,18 +16,15 @@ I wanted to ensure that no same three counties were batched together when either
 
 After a day of debugging, below is the final script to use Python in ArcGIS Pro create an animated GIF.
 
-# ===========================================================
 # START
-# ===========================================================
-
 
 import arcpy, os, random
 from PIL import Image
 import glob
 
-# ===========================================================
+
 # 1. ENVIRONMENT SETUP
-# ===========================================================
+
 aprx = arcpy.mp.ArcGISProject("CURRENT")
 mp = aprx.listMaps()[0]
 
@@ -57,9 +54,8 @@ print("Environment ready.")
 print("Blank layer:", blank_layer.name)
 print("Colored layer:", colored_layer.name)
 
-# ===========================================================
 # 2. NORMALIZATION + UNIQUE COUNTY LIST
-# ===========================================================
+
 def normalize(code):
     return str(code).zfill(3)
 
@@ -73,9 +69,8 @@ all_counties = sorted({
 print("Unique counties:", len(all_counties))
 print(all_counties)
 
-# ===========================================================
 # 3. UNIQUE BATCH PICKER
-# ===========================================================
+
 def pick_unique_batch(remaining, used_batches):
     attempts = 0
     while True:
@@ -96,9 +91,8 @@ def pick_unique_batch(remaining, used_batches):
         if attempts > 1000:
             raise RuntimeError("Unable to find unused batch — too many cycles requested.")
 
-# ===========================================================
 # 4. FORWARD ANIMATION
-# ===========================================================
+
 def forward_cycle(start_frame, used_batches):
     remaining = all_counties.copy()
     colored_so_far = []
@@ -128,9 +122,8 @@ def forward_cycle(start_frame, used_batches):
 
     return frame, colored_so_far.copy()
 
-# ===========================================================
 # 5. REVERSE ANIMATION
-# ===========================================================
+
 def reverse_cycle(start_frame, full_list, used_batches):
     remaining = full_list.copy()
     colored_so_far = full_list.copy()
@@ -166,9 +159,8 @@ def reverse_cycle(start_frame, full_list, used_batches):
 
     return frame
 
-# ===========================================================
 # 6. RUN 5 FULL CYCLES
-# ===========================================================
+
 frame_counter = 1
 
 for cycle in range(5):
@@ -181,9 +173,8 @@ for cycle in range(5):
 
 print("All 5 cycles complete.")
 
-# ===========================================================
 # 7. CREATE GIF FROM FRAMES
-# ===========================================================
+
 print("Building GIF...")
 
 frames = []
@@ -202,9 +193,7 @@ frames[0].save(
 
 print("GIF created:", gif_path)
 
-# ===========================================================
 # END
-# ===========================================================
 
 The final result:
 

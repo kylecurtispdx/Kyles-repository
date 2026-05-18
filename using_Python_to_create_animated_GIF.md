@@ -2,7 +2,7 @@ I had a map of Oregon in which I followed some John Nelson tutorials to have eac
 
 
 
-For a Python exercise, I was curious for the steps to start with a blank map of Oregon counties, and then add three random colored counties in a cumulative fashion until the 
+For a Python exercise, I was curious for the steps to start with a blank map of Oregon counties, and then add three random colored counties in a cumulative fashion until the
 
 blank map of Oregon was full of the pastel colors. And then reverse this process so that three colored counties would be taken away at random, so that the colored map reverts
 
@@ -14,7 +14,7 @@ In other words, start from this:
 
 
 
-!\[Frame 001](assets/images/frame\_001.png)
+!\[Frame 001](./assets/images/frame\_001.png)
 
 
 
@@ -22,7 +22,7 @@ to this:
 
 
 
-!\[Frame 013](assets/images/frame\_013.png)
+!\[Frame 013](./assets/images/frame\_013.png)
 
 
 
@@ -418,11 +418,5 @@ The final result:
 
 
 
-!\[Animation](assets/images/oregon\_animation.gif)
-
-
-
-
-
-
+!\[Animation](./assets/images/oregon\_animation.gif)
 

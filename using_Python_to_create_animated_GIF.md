@@ -418,7 +418,7 @@ The final result:
 
 
 
-!\[Animation](assets/images/Oregon\_animation.gif)
+!\[Animation](assets/images/oregon\_animation.gif)
 
 
 

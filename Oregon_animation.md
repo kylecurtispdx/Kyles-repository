@@ -197,4 +197,4 @@ print("GIF created:", gif_path)
 
 The final result:
 
-![Animation](./assets/images/oregon_animation.gif)
+![Animation](./assets/images/oregonanimation.gif)

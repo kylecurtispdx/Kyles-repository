@@ -14,7 +14,7 @@ In other words, start from this:
 
 
 
-!\[Frame 001](./assets/images/frame\_001.png)
+!\[Frame 001](./assets/images/frame001.png)
 
 
 
@@ -22,7 +22,7 @@ to this:
 
 
 
-!\[Frame 013](./assets/images/frame\_013.png)
+!\[Frame 013](./assets/images/frame013.png)
 
 
 
@@ -382,7 +382,7 @@ for file in sorted(glob.glob(os.path.join(output\_folder, "frame\_\*.png"))):
 
 
 
-gif\_path = os.path.join(output\_folder, "oregon\_animation.gif")
+gif\_path = os.path.join(output\_folder, "oregonanimation.gif")
 
 
 
